@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="A plain-English guide to AI agents for beginners, with a 40-minute lesson plan for teachers. A student project by Ahmed Cherif.">
+<title>Agents for Beginners</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,600..900&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: engineering-notebook feel. Wide-set sports-style headings, graph-paper hero, one signal-yellow highlight used only for marked text. */
+:root{
+  --bg:#f3f6f2; --surface:#ffffff; --fg:#14201a; --muted:#52625a; --line:#d5ddd6;
+  --accent:#0e7a5c; --accent-ink:#ffffff; --mark:#f2c230; --mark-ink:#14201a; --warn:#b3321f;
+  --code-bg:#101a15; --code-fg:#dde8e0; --code-dim:#8aa093;
+  --f-display:'Archivo','Arial Narrow',Arial,sans-serif;
+  --f-body:'Source Sans 3','Segoe UI',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1512; --surface:#16201b; --fg:#e8eee9; --muted:#9fb0a6; --line:#25332b;
+  --accent:#3ccb9c; --accent-ink:#06251b; --mark:#f2c230; --mark-ink:#14201a; --warn:#ff8a7a;
+  --code-bg:#0a100d; --code-fg:#dde8e0; --code-dim:#8aa093; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1512; --surface:#16201b; --fg:#e8eee9; --muted:#9fb0a6; --line:#25332b;
+  --accent:#3ccb9c; --accent-ink:#06251b; --mark:#f2c230; --mark-ink:#14201a; --warn:#ff8a7a;
+  --code-bg:#0a100d; --code-fg:#dde8e0; --code-dim:#8aa093; color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--fg);font:18px/1.6 var(--f-body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1040px;margin-inline:auto}
+h1,h2,h3{font-family:var(--f-display);font-stretch:112%;text-wrap:balance;margin:0;line-height:1.05;letter-spacing:-.01em}
+h1{font-size:clamp(40px,8vw,84px);font-weight:900}
+h2{font-size:clamp(28px,4.6vw,44px);font-weight:800}
+h3{font-size:21px;font-weight:700;font-stretch:100%}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.mono{font-family:var(--f-mono)}
+.label{font:500 13px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)))}
+nav.top .in{max-width:1040px;margin-inline:auto;display:flex;gap:4px 18px;align-items:center;overflow-x:auto;padding:10px max(16px,env(safe-area-inset-left,0px))}
+nav.top strong{font:800 15px var(--f-display);font-stretch:115%;white-space:nowrap;margin-right:auto}
+nav.top a{font:600 15px var(--f-body);text-decoration:none;color:var(--fg);white-space:nowrap;padding:6px 2px;border-bottom:2px solid transparent}
+nav.top a:hover{border-color:var(--accent)}
+.hero{padding-block:64px 56px;display:flex;flex-direction:column;gap:22px;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:32px 32px;background-position:-1px -1px;
+  margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.hero .in{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:22px;width:100%}
+.hero .lede{font-size:clamp(19px,2.4vw,24px);max-width:34ch;background:var(--bg);padding:2px 0}
+.hero h1 span{background:var(--mark);color:var(--mark-ink);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.byline{background:var(--bg);align-self:flex-start;padding:2px 0}
+section{padding-block:64px 8px;display:flex;flex-direction:column;gap:22px;scroll-margin-top:60px}
+.intro{max-width:62ch;color:var(--muted)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card .label{color:var(--accent)}
+.eq{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:stretch}
+.eq .box{flex:1 1 200px;background:var(--surface);border:2px solid var(--fg);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.eq .op{align-self:center;font:800 32px var(--f-display)}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button{font:600 16px var(--f-body);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:10px 14px;cursor:pointer;text-align:left}
+.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.trace{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;background:var(--surface);overflow:hidden}
+.trace li{display:grid;grid-template-columns:104px 1fr;gap:14px;padding:12px 16px;border-top:1px solid var(--line);align-items:baseline}
+.trace li:first-child{border-top:0}
+.trace .k{font:500 13px var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.k.think{color:var(--muted)}.k.act{color:var(--accent)}.k.obs{color:var(--warn)}.k.ans{color:var(--fg)}
+.trace li.ans{background:var(--mark);color:var(--mark-ink)}
+.trace li.ans .k{color:var(--mark-ink)}
+.trace code{font:500 15px var(--f-mono);overflow-wrap:anywhere}
+@media (max-width:520px){.trace li{grid-template-columns:1fr;gap:2px}}
+.note{font-size:15px;color:var(--muted);max-width:70ch}
+.codewrap{background:var(--code-bg);border-radius:6px;overflow:hidden}
+.codebar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.codebar .label{color:var(--code-dim)}
+.codebar button{font:600 13px var(--f-body);background:transparent;color:var(--code-fg);border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:5px 12px;cursor:pointer}
+pre{margin:0;padding:16px;overflow-x:auto;color:var(--code-fg);font:400 14.5px/1.6 var(--f-mono);tab-size:4}
+.c{color:var(--code-dim)}
+.steps{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start}
+.steps li::before{content:counter(s);font:800 18px var(--f-display);width:36px;height:36px;border-radius:50%;background:var(--fg);color:var(--bg);display:grid;place-items:center}
+.pad{display:flex;flex-direction:column;gap:4px}
+.gl{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.gl div{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.gl dt{font:700 17px var(--f-display);font-stretch:100%}
+.gl dd{margin:0;color:var(--muted);font-size:16px}
+.fill{background:var(--mark);color:var(--mark-ink);padding:0 .25em;border-radius:3px}
+.warnbox{border-left:6px solid var(--warn);background:var(--surface);padding:16px 18px;border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:6px}
+footer{padding-block:56px 40px;color:var(--muted);font-size:15px;display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);margin-top:64px}
+ul.plain{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.ok{font-size:14px;color:var(--accent)}
+</style>
+</head>
+<body>
+
+
+<nav class="top" aria-label="Sections"><div class="in">
+  <strong>AGENTS FOR BEGINNERS</strong>
+  <a href="index.html">Ahmed&#8217;s site</a>
+  <a href="#what">What is an agent</a><a href="#loop">The loop</a><a href="#build">Build one</a><a href="#teach">For teachers</a><a href="#safe">Stay safe</a><a href="#words">Words</a><a href="#about">About</a>
+</div></nav>
+
+<div class="wrap">
+<header class="hero"><div class="in">
+  <p class="label byline">By Ahmed Cherif · Somers, NY</p>
+  <h1>Build your first <span>AI agent</span></h1>
+  <p class="lede">A plain-English guide for beginners, plus a lesson plan for teachers who want to try it in class.</p>
+</div></header>
+
+<section id="what">
+  <p class="label">Start here</p>
+  <h2>What is an AI agent?</h2>
+  <p class="intro">A chatbot answers a question. An agent gets a goal and works toward it. It can look things up, run a calculation, or check a calendar, then decide what to do next. Three parts make one:</p>
+  <div class="eq" role="group" aria-label="An agent is a model plus tools plus a loop">
+    <div class="box"><span class="label">Part 1</span><h3>A model</h3><p>The language model that reads the goal and decides what to do.</p></div>
+    <span class="op" aria-hidden="true">+</span>
+    <div class="box"><span class="label">Part 2</span><h3>Tools</h3><p>Small functions it can call, like a calculator or a weather lookup.</p></div>
+    <span class="op" aria-hidden="true">+</span>
+    <div class="box"><span class="label">Part 3</span><h3>A loop</h3><p>Keep going until the job is done: decide, act, look at the result.</p></div>
+  </div>
+</section>
+
+<section id="loop">
+  <p class="label">See it work</p>
+  <h2>The loop, step by step</h2>
+  <p class="intro">Pick a task. Each line shows what the agent thinks, what tool it uses, and what comes back. Nothing here is running a real AI. These are written-out examples of how the loop looks.</p>
+  <div class="tabs" role="tablist" aria-label="Example tasks" id="tabs"></div>
+  <ol class="trace" id="trace" aria-live="polite"></ol>
+  <p class="note">The example data (weather, calendar) is made up for illustration.</p>
+</section>
+
+<section id="build">
+  <p class="label">Try it</p>
+  <h2>Build one in about 30 lines</h2>
+  <p class="intro">This Python program is a real agent with one tool, a calculator. The loop asks the model what to do, runs the tool if it asks for one, and sends the result back until the model gives a final answer.</p>
+  <ol class="steps">
+    <li><div class="pad"><h3>Get an API key</h3><p>Create an account at the Anthropic Console and make a key. <strong>An adult needs to do this step.</strong> Keep the key secret and never paste it into a document or a public page.</p></div></li>
+    <li><div class="pad"><h3>Install the library</h3><p>In a terminal: <code class="mono">pip install anthropic</code>. Then set your key: <code class="mono">export ANTHROPIC_API_KEY="your-key"</code>.</p></div></li>
+    <li><div class="pad"><h3>Save and run the program</h3><p>Copy the code below into a file called <code class="mono">agent.py</code> and run <code class="mono">python agent.py</code>.</p></div></li>
+  </ol>
+  <div class="codewrap">
+    <div class="codebar"><span class="label">agent.py</span><span><span class="ok" id="ok-code" aria-live="polite"></span> <button type="button" id="copy-code">Copy code</button></span></div>
+<pre><code><span class="c"># A tiny agent: one model, one tool, one loop.</span>
+import anthropic
+
+client = anthropic.Anthropic()   <span class="c"># reads ANTHROPIC_API_KEY</span>
+
+tools = [{
+    "name": "calculator",
+    "description": "Evaluate a basic math expression, like 240 * 0.15",
+    "input_schema": {
+        "type": "object",
+        "properties": {"expression": {"type": "string"}},
+        "required": ["expression"],
+    },
+}]
+
+def run_tool(name, args):
+    if name == "calculator":
+        expr = args["expression"]
+        if "**" in expr or not set(expr) &lt;= set("0123456789+-*/(). "):
+            return "Not allowed"
+        return str(eval(expr))      <span class="c"># toy only: see the safety section</span>
+    return "Unknown tool"
+
+messages = [{"role": "user", "content": "What is 15% of 240, plus 8?"}]
+
+while True:
+    resp = client.messages.create(
+        model="claude-sonnet-5-5", max_tokens=1024,
+        tools=tools, messages=messages,
+    )
+    messages.append({"role": "assistant", "content": resp.content})
+    if resp.stop_reason != "tool_use":
+        break                         <span class="c"># no tool needed: we have the answer</span>
+    results = []
+    for block in resp.content:
+        if block.type == "tool_use":
+            results.append({
+                "type": "tool_result",
+                "tool_use_id": block.id,
+                "content": run_tool(block.name, block.input),
+            })
+    messages.append({"role": "user", "content": results})
+
+print(next(b.text for b in resp.content if b.type == "text"))</code></pre>
+  </div>
+  <p class="note">Things to try next: change the question, add a second tool (like a function that returns today&#8217;s date), or print each step inside the loop to watch the agent think. Model names and library details change over time, so check the current Anthropic documentation if something does not run.</p>
+  <div class="card"><span class="label">No code?</span><p>Paste this into any AI chat and play along: <em>&#8220;Act as an agent. I will be your calculator and your notebook. Tell me what tool you want to use and what to type in, then wait for my reply.&#8221;</em> You will feel the loop from the inside.</p></div>
+</section>
+
+<section id="teach">
+  <p class="label">For teachers</p>
+  <h2>A 40-minute lesson: be the agent</h2>
+  <p class="intro">No computers needed. Students act out the loop in groups of four, so they see why agents work and where they go wrong before they ever see code.</p>
+  <div class="cols">
+    <div class="card"><span class="label">Role 1</span><h3>The Brain</h3><p>Reads the goal and says out loud what to do next. Plays the model.</p></div>
+    <div class="card"><span class="label">Role 2</span><h3>The Hands</h3><p>Has one tool card (calculator, class schedule, or a book). Only does what the Brain asks.</p></div>
+    <div class="card"><span class="label">Role 3</span><h3>The Notebook</h3><p>Writes down every step. This is the agent&#8217;s memory.</p></div>
+    <div class="card"><span class="label">Role 4</span><h3>The Referee</h3><p>A human in the loop. Can stop the agent at any step.</p></div>
+  </div>
+  <div class="box card">
+    <h3>Plan</h3>
+    <ul class="plain">
+      <li><strong>5 min, hook:</strong> Ask the class to plan a field trip lunch order with a budget. Have them notice what steps they took.</li>
+      <li><strong>10 min, explain:</strong> Show the three parts and the loop from this page.</li>
+      <li><strong>15 min, act it out:</strong> Each group gets a goal, such as &#8220;How many days until the science fair, and what should we finish each week?&#8221; The Brain must say <em>think</em>, <em>act</em>, or <em>answer</em> each turn. The Notebook records every step.</li>
+      <li><strong>10 min, debrief:</strong> Where did the agent get stuck? Where did the Referee step in? Which answers would you not trust?</li>
+    </ul>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>Discussion questions</h3><ul class="plain"><li>What is the difference between answering and acting?</li><li>When should a human approve a step?</li><li>What could go wrong if a tool gives a bad result?</li></ul></div>
+    <div class="card"><h3>Exit ticket</h3><ul class="plain"><li>Name the three parts of an agent.</li><li>Describe one task you would give an agent and one you would not.</li></ul></div>
+    <div class="card"><h3>If you go further</h3><p>Use the code above in a supervised setting. Check your school&#8217;s policy and each tool&#8217;s age requirements first, and keep student names and personal details out of every prompt.</p></div>
+  </div>
+</section>
+
+<section id="safe">
+  <p class="label">Read this too</p>
+  <h2>Agents make mistakes</h2>
+  <div class="warnbox">
+    <p><strong>Check the work.</strong> Models can sound sure and still be wrong. Verify anything that matters.</p>
+    <p><strong>Keep a human in the loop.</strong> Do not let an agent delete files, spend money or send messages without approval.</p>
+    <p><strong>Protect your key and your data.</strong> Never share an API key, and never type passwords or personal details into a prompt.</p>
+    <p><strong>The toy calculator is a toy.</strong> The code runs <span class="mono">eval</span> on text from the model. It is fine for practice with the checks above, but real programs should use a safe math parser.</p>
+  </div>
+</section>
+
+<section id="words">
+  <p class="label">Glossary</p>
+  <h2>Words you will hear</h2>
+  <dl class="gl" style="margin:0">
+    <div><dt>Agent</dt><dd>A model that uses tools in a loop to reach a goal.</dd></div>
+    <div><dt>Model</dt><dd>The AI that reads text and writes a reply.</dd></div>
+    <div><dt>Prompt</dt><dd>The instructions and question you give the model.</dd></div>
+    <div><dt>Tool</dt><dd>A function the agent can call, like a calculator.</dd></div>
+    <div><dt>Tool call</dt><dd>The model asking to use a tool with specific inputs.</dd></div>
+    <div><dt>Loop</dt><dd>Repeating decide, act, observe until the job is done.</dd></div>
+    <div><dt>Memory</dt><dd>What the agent keeps track of, such as the earlier steps.</dd></div>
+    <div><dt>Human in the loop</dt><dd>A person who can approve or stop a step.</dd></div>
+    <div><dt>API key</dt><dd>A secret code that lets a program use an AI service.</dd></div>
+  </dl>
+</section>
+
+<section id="about">
+  <p class="label">About</p>
+  <h2>Who made this</h2>
+  <p class="intro">I&#8217;m Ahmed, a senior at Somers High School. I started this guide because I wanted to show beginners and teachers how an AI agent actually works, without needing to be an expert. I&#8217;m also starting an AI agents club, just for fun.</p>
+  <h3 style="margin-top:12px">Why I care about this</h3>
+  <p class="intro">AI is growing fast, and it excites me and worries me at the same time. It is already changing how we study, work and make things, and nobody knows exactly where it goes next. That mix of curiosity and fear is what pushed me to learn how it works. I would rather understand it than just watch it happen.</p>
+  <p class="intro">I think AI can be a real force for good when people stay in charge. An agent can take the slow, repetitive jobs, like looking things up, running numbers or keeping track of steps. That leaves people more time for the parts that need judgment, creativity and care. A person still checks the result and decides what happens next. Humans and agents working together can do more than either one alone, and that is the kind of future I want to help build.</p>
+  <p class="intro"><a href="index.html">See more about me on my main site.</a></p>
+</section>
+
+<footer>
+  <p>Agents for Beginners · A student project by Ahmed Cherif. <a href="index.html">Back to his main site</a>.</p>
+  <p>This page explains general ideas and is not official guidance from any company. Check current documentation before you build.</p>
+</footer>
+</div>
+
+<script>
+var TASKS=[
+ {name:'Do the math',goal:'What is 15% of 240, plus 8?',steps:[
+  ['think','I need to find 15% of 240 first. I will use the calculator.'],
+  ['act','calculator("240 * 0.15")'],
+  ['obs','36'],
+  ['think','Now add 8 to that.'],
+  ['act','calculator("36 + 8")'],
+  ['obs','44'],
+  ['ans','15% of 240 is 36, and 36 plus 8 is 44.']]},
+ {name:'Plan practice',goal:'Is it a good day to practice outside?',steps:[
+  ['think','I need today’s weather before I can answer.'],
+  ['act','get_weather("Somers, NY")'],
+  ['obs','48°F, dry until 3 pm, rain after 4 pm (example data)'],
+  ['think','Rain is coming later. Early practice should be fine.'],
+  ['ans','Yes, but finish before 3 pm. Bring a jacket, and move indoors if it rains.']]},
+ {name:'Study plan',goal:'Help me prepare for Friday’s test.',steps:[
+  ['think','I should see which afternoons are free this week.'],
+  ['act','read_calendar("this week")'],
+  ['obs','Mon: practice 3:30 to 5:30. Tue: free. Wed: practice. Thu: free (example data)'],
+  ['think','Tuesday and Thursday are open. I should review early, then do practice questions.'],
+  ['ans','Review notes on Tuesday for 45 minutes. On Thursday, do practice questions for 45 minutes, then sleep early.']]}
+];
+var LABEL={think:'Think',act:'Use tool',obs:'Result',ans:'Answer'};
+var tabs=document.getElementById('tabs'),trace=document.getElementById('trace'),cur=0;
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+function renderTrace(){
+  var t=TASKS[cur];
+  var h='<li><span class="k think">Goal</span><span><strong>'+esc(t.goal)+'</strong></span></li>';
+  t.steps.forEach(function(s){
+    var code=(s[0]==='act'||s[0]==='obs');
+    h+='<li class="'+s[0]+'"><span class="k '+s[0]+'">'+LABEL[s[0]]+'</span><span>'+(code?'<code>'+esc(s[1])+'</code>':esc(s[1]))+'</span></li>';
+  });
+  trace.innerHTML=h;
+  [].forEach.call(tabs.children,function(b,i){b.setAttribute('aria-selected',i===cur?'true':'false')});
+}
+TASKS.forEach(function(t,i){
+  var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.textContent=t.name;
+  b.addEventListener('click',function(){cur=i;renderTrace()});tabs.appendChild(b);
+});
+renderTrace();
+
+function copyText(text,okId){
+  function done(m){var o=document.getElementById(okId);if(o){o.textContent=m;setTimeout(function(){o.textContent=''},2200)}}
+  function fb(){var ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);done(ok?'Copied':'Select the code and copy it')}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){done('Copied')},fb)}else{fb()}
+}
+document.getElementById('copy-code').addEventListener('click',function(){
+  copyText(document.querySelector('#build pre code').textContent,'ok-code');
+});
+</script>
+
+</body>
+</html>
