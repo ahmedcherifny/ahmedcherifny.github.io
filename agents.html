@@ -8,10 +8,10 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,600..900&family=Source+Sans+3:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: engineering-notebook feel. Wide-set sports-style headings, graph-paper hero, one signal-yellow highlight used only for marked text. */
+/* Layout: engineering-notebook feel. Wide-set sports-style headings, graph-paper hero, one soft green highlight used only for marked text. */
 :root{
   --bg:#f3f6f2; --surface:#ffffff; --fg:#14201a; --muted:#52625a; --line:#d5ddd6;
-  --accent:#0e7a5c; --accent-ink:#ffffff; --mark:#f2c230; --mark-ink:#14201a; --warn:#b3321f;
+  --accent:#0e7a5c; --accent-ink:#ffffff; --mark:#a6e3cc; --mark-ink:#14201a; --warn:#b3321f;
   --code-bg:#101a15; --code-fg:#dde8e0; --code-dim:#8aa093;
   --f-display:'Archivo','Arial Narrow',Arial,sans-serif;
   --f-body:'Source Sans 3','Segoe UI',system-ui,sans-serif;
@@ -19,11 +19,11 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0e1512; --surface:#16201b; --fg:#e8eee9; --muted:#9fb0a6; --line:#25332b;
-  --accent:#3ccb9c; --accent-ink:#06251b; --mark:#f2c230; --mark-ink:#14201a; --warn:#ff8a7a;
+  --accent:#3ccb9c; --accent-ink:#06251b; --mark:#3ccb9c; --mark-ink:#06251b; --warn:#ff8a7a;
   --code-bg:#0a100d; --code-fg:#dde8e0; --code-dim:#8aa093; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0e1512; --surface:#16201b; --fg:#e8eee9; --muted:#9fb0a6; --line:#25332b;
-  --accent:#3ccb9c; --accent-ink:#06251b; --mark:#f2c230; --mark-ink:#14201a; --warn:#ff8a7a;
+  --accent:#3ccb9c; --accent-ink:#06251b; --mark:#3ccb9c; --mark-ink:#06251b; --warn:#ff8a7a;
   --code-bg:#0a100d; --code-fg:#dde8e0; --code-dim:#8aa093; color-scheme:dark}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -245,6 +245,40 @@ print(next(b.text for b in resp.content if b.type == "text"))</code></pre>
     <div><dt>Human in the loop</dt><dd>A person who can approve or stop a step.</dd></div>
     <div><dt>API key</dt><dd>A secret code that lets a program use an AI service.</dd></div>
   </dl>
+</section>
+
+<section id="together">
+  <p class="label">Humans and agents</p>
+  <h2>Better together</h2>
+  <p>An agent is fast and never gets bored. A person knows what matters and what is fair. The best results come when each does the part they are good at.</p>
+  <svg viewBox="0 0 760 340" role="img" aria-labelledby="tt" style="width:100%;height:auto;display:block;max-width:820px">
+<title id="tt">A person and an AI agent pass a goal and a result back and forth. The person sets the goal and checks the result.</title>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker></defs>
+<rect x="1" y="1" width="758" height="338" rx="14" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+<!-- human -->
+<g stroke="var(--fg)" stroke-width="4" fill="var(--mark)" stroke-linejoin="round"><circle cx="130" cy="125" r="34"/><path d="M62 235c0-42 30-62 68-62s68 20 68 62z"/></g>
+<text x="130" y="272" text-anchor="middle" font-family="var(--f-display)" font-weight="800" font-size="24" fill="var(--fg)">Human</text>
+<text x="130" y="298" text-anchor="middle" font-family="var(--f-body)" font-size="16" fill="var(--muted)">judgment, creativity, care</text>
+<!-- agent -->
+<g stroke="var(--fg)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"><rect x="540" y="98" width="180" height="136" rx="22" fill="var(--accent)"/><path d="M630 98V74" fill="none"/><circle cx="630" cy="66" r="8" fill="var(--mark)"/></g>
+<circle cx="592" cy="150" r="14" fill="var(--accent-ink)"/><circle cx="668" cy="150" r="14" fill="var(--accent-ink)"/>
+<path d="M590 195h80" stroke="var(--accent-ink)" stroke-width="6" stroke-linecap="round" stroke-dasharray="14 10"/>
+<text x="630" y="272" text-anchor="middle" font-family="var(--f-display)" font-weight="800" font-size="24" fill="var(--fg)">AI agent</text>
+<text x="630" y="298" text-anchor="middle" font-family="var(--f-body)" font-size="16" fill="var(--muted)">speed, patience, tools</text>
+<!-- arrows -->
+<path d="M205 125H520" stroke="var(--accent)" stroke-width="4" fill="none" marker-end="url(#ar)"/>
+<text x="362" y="108" text-anchor="middle" font-family="var(--f-body)" font-weight="700" font-size="17" fill="var(--fg)">1. A goal and the rules</text>
+<path d="M520 205H205" stroke="var(--accent)" stroke-width="4" fill="none" marker-end="url(#ar)"/>
+<text x="362" y="236" text-anchor="middle" font-family="var(--f-body)" font-weight="700" font-size="17" fill="var(--fg)">2. A result to check</text>
+<!-- together -->
+<rect x="268" y="150" width="190" height="34" rx="17" fill="var(--mark)" stroke="var(--fg)" stroke-width="3"/>
+<text x="363" y="173" text-anchor="middle" font-family="var(--f-display)" font-weight="800" font-size="17" fill="var(--mark-ink)">Better together</text>
+<text x="362" y="30" text-anchor="middle" font-family="var(--f-body)" font-size="16" fill="var(--muted)">The agent does the steps. The person decides what happens next.</text>
+</svg>
+  <div class="cards" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+    <div class="card"><p class="label">The human</p><p>Sets the goal, makes the judgment calls, and checks the work before it goes anywhere.</p></div>
+    <div class="card"><p class="label">The agent</p><p>Looks things up, runs the numbers and keeps track of every step, again and again without getting tired.</p></div>
+  </div>
 </section>
 
 <section id="about">
